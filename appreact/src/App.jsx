@@ -1,18 +1,15 @@
 import { useState } from 'react'
 import './App.css'
-import Welcome from "./Welcome.jsx"
-import Counter from './Counter.jsx'
-
+import LoginPage from './pages/LoginPage'
+import CadastroUsuario from './pages/CadastroUsuario'
 function App() {
 
   return (
     <>
-    <Welcome name='João'></Welcome>
-    <hr/>
-    <Welcome name = 'Pedro'></Welcome>
-    <hr/>
-    <Counter></Counter>
+    {/* <LoginPage/> */}
+    <CadastroUsuario/>
     </>
+
   )
 }
 
