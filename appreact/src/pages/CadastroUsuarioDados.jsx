@@ -72,7 +72,7 @@ export default function CadastroUsuarioDados() {
 
                 
 
-                <p class="registro">Não tem conta? <a href="/cadastro-usuario.jsx">Registre-se agora</a></p>
+                
 
 
         </main>

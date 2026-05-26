@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import InputField from '../componentes/InputField';
 import  '../assets/styles.css'
+import { Link } from 'react-router-dom';
 export default function CadastroUsuario() {
 
  const [cpf, setCpf] = useState('');
@@ -45,8 +46,8 @@ export default function CadastroUsuario() {
                 {erro && <p>{erro}</p>}
                 <button type="submit">Entrar</button>
 
-                <a href="cadastro-usuario-dados.jsx">Prosseguir</a>
-
+                <Link to='/CadastroUsuarioDados'>prosseguir</Link>
+                
             </div>
 
         </main>

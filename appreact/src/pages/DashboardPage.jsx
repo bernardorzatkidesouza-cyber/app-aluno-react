@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { buscarUsuario } from '../services/githubService';
 import '../assets/styles.css';
-
-const USERNAME = 'bernardorzatkidesouza-cyber';
+import { useUsuario } from '../context/UsuarioContext';
 
 // Subcomponente interno para os Cards de Informação
 function CardInfo({ titulo, valor, descricao }) {
@@ -21,9 +20,10 @@ export default function DashboardPage() {
   const [usuario, setUsuario] = useState(null);
   const [loading, setLoading] = useState(true);
   const [erro, setErro] = useState('');
-  const [busca, setBusca] = useState(USERNAME);
-  const [username, setUsername] = useState('');
-
+  const { username } = useUsuario();
+  const [busca, setBusca] = useState(username);
+  const [usernamebusca, setUsernameBusca] = useState('');
+  
   useEffect(() => {
     async function carregar() {
       try {
@@ -92,14 +92,14 @@ export default function DashboardPage() {
 
       {/* Formulário de Busca de Usuário */}
       <form 
-        onSubmit={e => { e.preventDefault(); if(username.trim()) setBusca(username); }}
+        onSubmit={e => { e.preventDefault(); if(usernamebusca.trim()) setBusca(usernamebusca); }}
         style={{ margin: '20px 0', display: 'flex', gap: '10px' }}
       >
         <input 
           type="text"
           placeholder="Buscar outro usuário GitHub..."
           value={username}
-          onChange={e => setUsername(e.target.value)}
+          onChange={e => setUsernameBusca(e.target.value)}
           style={{ padding: '8px', borderRadius: '4px', border: '1px solid #ccc', flex: 1 }}
         />
         <button type="submit" style={{ padding: '8px 16px', borderRadius: '4px', cursor: 'pointer' }}>

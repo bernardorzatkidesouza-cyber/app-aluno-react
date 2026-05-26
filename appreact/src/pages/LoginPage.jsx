@@ -1,12 +1,15 @@
 import { useState } from 'react';
 import InputField from '../componentes/InputField';
 import  '../assets/styles.css'
+import { useUsuario } from '../context/UsuarioContext';
+import { Link, useNavigate } from 'react-router-dom';
 export default function LoginPage() {
 
  const [email, setEmail] = useState('');
  const [senha, setSenha] = useState('');
  const [erro, setErro] = useState('');
-
+ const navigate = useNavigate();
+ const { setUsername } = useUsuario();
 
  function handleSubmit(e) {
         e.preventDefault();
@@ -15,6 +18,8 @@ export default function LoginPage() {
             return; }
          setErro('');
          console.log('Login:', email, senha);
+         setUsername(email)
+         navigate('/dashboard');
  }
     
 
@@ -38,7 +43,7 @@ export default function LoginPage() {
                    <form onSubmit={handleSubmit}>
                     <InputField 
                         label="E-mail" 
-                        type="email" 
+                        type="text" 
                         placeholder="user@email.com"
                         value={email} 
                         onChange={e =>setEmail(e.target.value)} />
@@ -55,7 +60,10 @@ export default function LoginPage() {
 
                 
 
-                <p class="registro">Não tem conta? <a href="/cadastro-usuario.jsx">Registre-se agora</a></p>
+                <p class="registro">Não tem conta? 
+                    <Link to='/CadastroUsuario'>Registre-se agora</Link>
+
+                </p>
 
             </div>
         </main>
