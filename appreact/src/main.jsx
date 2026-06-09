@@ -19,8 +19,8 @@ createRoot(document.getElementById('root')).render(
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/CadastroUsuario" element={<CadastroUsuario/>}/>
         <Route path="/CadastroUsuarioDados" element={<CadastroUsuarioDados/>}/>
-        <route path="/RecuperarSenha" element={<RecuperarSenha/>}/>
-        <route path="/NovaSenha" element={<NovaSenha/>}/>
+        <Route path="/RecuperarSenha" element={<RecuperarSenha/>}/>
+        <Route path="/NovaSenha" element={<NovaSenha/>}/>
       </Routes>
     </BrowserRouter>
     </UsuarioProvider>
