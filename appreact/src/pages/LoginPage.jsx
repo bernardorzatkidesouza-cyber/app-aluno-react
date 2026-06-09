@@ -1,76 +1,86 @@
 import { useState } from 'react';
 import InputField from '../componentes/InputField';
-import  '../assets/styles.css'
+import '../assets/styles.css';
 import { useUsuario } from '../context/UsuarioContext';
 import { Link, useNavigate } from 'react-router-dom';
+
 export default function LoginPage() {
 
- const [email, setEmail] = useState('');
- const [senha, setSenha] = useState('');
- const [erro, setErro] = useState('');
- const navigate = useNavigate();
- const { setUsername } = useUsuario();
+    const [email, setEmail] = useState('');
+    const [senha, setSenha] = useState('');
+    const [erro, setErro] = useState('');
+    const navigate = useNavigate();
+    const { setUsername } = useUsuario();
 
- function handleSubmit(e) {
+    function handleSubmit(e) {
         e.preventDefault();
-        if (!email || !senha) { 
-            setErro('Preencha todos os campos'); 
-            return; }
-         setErro('');
-         console.log('Login:', email, senha);
-         setUsername(email)
-         navigate('/dashboard');
- }
-    
 
- return (
-    <>
+        if (!email || !senha) {
+            setErro('Preencha todos os campos');
+            return;
+        }
 
- <div class="container">
+        setErro('');
+        console.log('Login:', email, senha);
+        setUsername(email);
+        navigate('/dashboard');
+    }
 
-        <aside>
-            <p>
-                Educação não é aprendizado de fatos, mas o treinamento da mente para pensar.
-                <span>Albert Einstein</span>
-            </p>
-        </aside>
+    return (
+        <>
+            <div className="container">
 
-        <main>
-            <div class="cadastro">
+                <aside>
+                    <p>
+                        Educação não é aprendizado de fatos, mas o treinamento da mente para pensar.
+                        <span>Albert Einstein</span>
+                    </p>
+                </aside>
 
-                <h1>Bem-vindo de volta</h1>
-                <p>Por favor, insira suas credenciais para acessar seu painel acadêmico</p>
-                   <form onSubmit={handleSubmit}>
-                    <InputField 
-                        label="E-mail" 
-                        type="text" 
-                        placeholder="user@email.com"
-                        value={email} 
-                        onChange={e =>setEmail(e.target.value)} />
+                <main>
+                    <div className="cadastro">
 
-                    <InputField 
-                        label="Senha" 
-                        type="password"
-                        placeholder="********" 
-                        value={senha} 
-                        onChange={e =>setSenha(e.target.value)} />
-                {erro && <p>{erro}</p>}
-                <button type="submit">Entrar</button>
- </form> 
+                        <h1>Bem-vindo de volta</h1>
+                        <p>
+                            Por favor, insira suas credenciais para acessar seu painel acadêmico
+                        </p>
 
-                
+                        <form onSubmit={handleSubmit}>
+                            <InputField
+                                label="E-mail"
+                                type="text"
+                                placeholder="user@email.com"
+                                value={email}
+                                onChange={e => setEmail(e.target.value)}
+                            />
 
-                <p class="registro">Não tem conta? 
-                    <Link to='/CadastroUsuario'>Registre-se agora</Link>
+                            <InputField
+                                label="Senha"
+                                type="password"
+                                placeholder="********"
+                                value={senha}
+                                onChange={e => setSenha(e.target.value)}
+                            />
 
-                </p>
+                            <div style={{ textAlign: 'right', marginBottom: '10px' }}>
+                                <span>Esqueceu sua senha? </span>
+                                <Link to="/RecuperarSenha">Prosseguir</Link>
+                            </div>
+
+                            {erro && <p>{erro}</p>}
+
+                            <button type="submit">Entrar</button>
+                        </form>
+
+                        <p className="registro">
+                            Não tem conta?
+                            <Link to="/CadastroUsuario"> Registre-se agora</Link>
+                        </p>
+
+                    </div>
+                </main>
 
             </div>
-        </main>
-
-    </div>
-
- 
- </>
- );
+        </>
+    );
 }
