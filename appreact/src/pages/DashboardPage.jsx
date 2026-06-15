@@ -1,143 +1,212 @@
 import { useState, useEffect } from 'react';
-import { buscarUsuario } from '../services/githubService';
+import InputField from '../componentes/InputField';
 import '../assets/styles.css';
+import "../assets/mobile.css"
 import { useUsuario } from '../context/UsuarioContext';
+import { Link, useNavigate } from 'react-router-dom';
 
-// Subcomponente interno para os Cards de Informação
-function CardInfo({ titulo, valor, descricao }) {
-  return (
-    <div className="card">
-      <div className="card__body">
-        <span className="card__badge">{titulo}</span>
-        <h3 className="card__title">{valor}</h3>
-        {descricao && <p className="card__description">{descricao}</p>}
-      </div>
-    </div>
-  );
+function Dashboard() {
+    const [agora, setAgora] = useState(new Date());
+
+    useEffect(() => {
+        const intervalo = setInterval(() => {
+            setAgora(new Date());
+        }, 1000);
+
+        return () => clearInterval(intervalo);
+    }, []);
+
+    const obterSaudacao = () => {
+        const hora = agora.getHours();
+
+        if (hora < 12) return "Bom dia";
+        if (hora < 18) return "Boa tarde";
+        return "Boa noite";
+    };
+
+    const dataAtual = agora.toLocaleDateString("pt-BR", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+    });
+
+    const horaAtual = agora.toLocaleTimeString("pt-BR");
+
+    return (
+        <div className="dashboard">
+
+            <header>
+                <div className="dashboard__header">
+
+                    <h1 className="dashboard__title">
+                        Academia
+                        <span>Portal do aluno</span>
+                    </h1>
+
+                    <nav className="dashboard__menu">
+                        
+                        <Link to="/Diciplinas">Diciplinas</Link>
+                        <Link to="/TutorIA">Tutor IA</Link>
+                        <Link to="/Perfil">Perfil</Link>
+                    </nav>
+
+                </div>
+            </header>
+
+            <div className="dashboard__body">
+
+                <div className="dashboard__hero">
+                    <h2 id="greeting">
+                        {obterSaudacao()}, João
+                    </h2>
+
+                    <p id="data-atual">
+                        {dataAtual} • {horaAtual}
+                    </p>
+
+                    <p>
+                        Bem-vindo de volta à sua sessão de estudos focada.
+                        Você tem duas tarefas para esta semana e está atualmente
+                        adiantado em relação ao seu cronograma de leitura.
+                    </p>
+                </div>
+
+                <div className="card">
+
+                    <div className="card__body">
+                        <span className="card__badge">
+                            Em progresso
+                        </span>
+
+                        <h3 className="card__title">
+                            Front-end
+                        </h3>
+
+                        <p>
+                            Aula 2: Conceitos de desenvolvimento Front-end
+                            e Git + GitHub
+                        </p>
+
+                        <div className="card__progress">
+                            <div style={{ width: "65%" }}>
+                                65%
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="card__footer">
+                        <button
+                            id="Front"
+                            className="card__button"
+                        >
+                            Retomar estudos
+                        </button>
+                    </div>
+
+                </div>
+
+                <div className="card">
+
+                    <div className="card__body">
+                        <span className="card__badge">
+                            Em progresso
+                        </span>
+
+                        <h3 className="card__title">
+                            UX Design
+                        </h3>
+
+                        <p>
+                            Aula 3: Conceitos de UX Design e
+                            prototipagem
+                        </p>
+
+                        <div className="card__progress">
+                            <div style={{ width: "36%" }}>
+                                36%
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="card__footer">
+                        <button
+                            id="Ux"
+                            className="card__button"
+                        >
+                            Retomar estudos
+                        </button>
+                    </div>
+
+                </div>
+
+                <div className="card__group">
+
+                    <div className="card card--33">
+                        <div className="card__body">
+
+                            <span className="card__badge card__badge--title">
+                                Tempo de estudo
+                            </span>
+
+                            <h3
+                                id="tempo"
+                                className="card__title"
+                            >
+                                12h 45m
+                            </h3>
+
+                            <p>Esta semana</p>
+
+                        </div>
+                    </div>
+
+                    <div className="card card--33">
+                        <div className="card__body">
+
+                            <span className="card__badge card__badge--title">
+                                Tarefas pendentes
+                            </span>
+
+                            <h3
+                                id="tarefas"
+                                className="card__title"
+                            >
+                                2
+                            </h3>
+
+                            <p id="vencimento">
+                                Vencimento em 3 dias
+                            </p>
+
+                        </div>
+                    </div>
+
+                    <div className="card card--33">
+                        <div className="card__body">
+
+                            <span className="card__badge card__badge--title">
+                                Chat com IA
+                            </span>
+
+                            <h3
+                                id="chats"
+                                className="card__title"
+                            >
+                                8
+                            </h3>
+
+                            <p>Tópicos ativos</p>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    );
 }
 
-export default function DashboardPage() {
-  const [usuario, setUsuario] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [erro, setErro] = useState('');
-  const { username } = useUsuario();
-  const [busca, setBusca] = useState(username);
-  const [usernamebusca, setUsernameBusca] = useState('');
-  
-  useEffect(() => {
-    async function carregar() {
-      try {
-        setLoading(true);
-        const dados = await buscarUsuario(busca);
-        setUsuario(dados);
-        setErro('');
-      } catch (err) {
-        setErro(err.message || 'Erro ao buscar usuário');
-      } finally {
-        setLoading(false);
-      }
-    }
-    carregar();
-  }, [busca]);
-
-  // Função para pegar a saudação baseada no horário
-  const obterSaudacao = () => {
-    const hora = new Date().getHours();
-    if (hora < 12) return 'Bom dia';
-    if (hora < 18) return 'Boa tarde';
-    return 'Boa noite';
-  };
-
-  // Data atual formatada
-  const dataHoje = new Date().toLocaleDateString('pt-BR', {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
-
-  if (loading) return <p>Carregando perfil...</p>;
-  if (erro) return <p>Erro: {erro}</p>;
-
-  return (
-    <div className="dashboard__container">
-      {/* Bloco de Boas-Vindas com dados Dinâmicos do GitHub */}
-      <div className="welcome">
-        <div className="dashboard__hero" style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '15px' }}>
-          <img 
-            src={usuario?.avatar_url} 
-            alt={usuario?.login} 
-            style={{ width: '60px', height: '60px', borderRadius: '50%' }} 
-          />
-          <div>
-            <h2 id="greeting">
-              {obterSaudacao()}, {usuario?.name || usuario?.login}
-            </h2>
-            <p id="dataHoje">{dataHoje}</p>
-          </div>
-        </div>
-        
-        {usuario?.bio && <p style={{ fontStyle: 'italic', marginBottom: '10px' }}>"{usuario.bio}"</p>}
-        
-        <p>
-          Bem-vindo de volta a sua sessão de estudos focado.
-          Você tem {usuario?.public_repos > 0 ? 2 : 0} tarefas para essa semana
-          e está atualmente adiantado em seu cronograma de leitura.
-        </p>
-
-        <a href={usuario?.html_url} target="_blank" rel="noreferrer" className="github-link">
-          Ver perfil no GitHub →
-        </a>
-      </div>
-
-      {/* Formulário de Busca de Usuário */}
-      <form 
-        onSubmit={e => { e.preventDefault(); if(usernamebusca.trim()) setBusca(usernamebusca); }}
-        style={{ margin: '20px 0', display: 'flex', gap: '10px' }}
-      >
-        <input 
-          type="text"
-          placeholder="Buscar outro usuário GitHub..."
-          value={username}
-          onChange={e => setUsernameBusca(e.target.value)}
-          style={{ padding: '8px', borderRadius: '4px', border: '1px solid #ccc', flex: 1 }}
-        />
-        <button type="submit" style={{ padding: '8px 16px', borderRadius: '4px', cursor: 'pointer' }}>
-          Buscar
-        </button>
-      </form>
-
-      {/* Cards de Cursos (Estáticos do seu HTML) */}
-      <div className="card">
-        <div className="card__body">
-          <span className="card__badge">Em progresso</span>
-          <h3 className="card__title">Front-end</h3>
-          <p className="card__description">Aula 2 - Conceitos de desenvolvimento Front-end e Git + Github</p>
-          <div className="card__progress">
-            <div style={{ width: '65%' }}>65%</div>
-          </div>
-        </div>
-        <button className="card__button">Retomar estudo</button>
-      </div>
-
-      <div className="card">
-        <div className="card__body">
-          <span className="card__badge">Em progresso</span>
-          <h3 className="card__title">UX Design</h3>
-          <p className="card__description">Aula 3 - Usabilidade</p>
-          <div className="card__progress">
-            <div style={{ width: '34%' }}>34%</div>
-          </div>
-        </div>
-        <button className="card__button">Retomar estudo</button>
-      </div>
-
-      {/* Grupo de Cards com as Métricas do GitHub */}
-      <div className="card__group">
-        <CardInfo titulo="Repositórios" valor={usuario?.public_repos} descricao="Repositórios públicos" />
-        <CardInfo titulo="Seguidores" valor={usuario?.followers} descricao="Seguidores no GitHub" />
-        <CardInfo titulo="Seguindo" valor={usuario?.following} descricao="Perfis seguidos" />
-      </div>
-    </div>
-  );
-}
+export default Dashboard;

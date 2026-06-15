@@ -9,6 +9,9 @@ import CadastroUsuario from './pages/CadastroUsuario.jsx'
 import CadastroUsuarioDados from './pages/CadastroUsuarioDados.jsx'
 import NovaSenha from './pages/NovaSenha.jsx'
 import RecuperarSenha from './pages/RcuperarSenha.jsx'
+import TutorIA from './pages/TutorIA.jsx'
+import Perfil from './pages/Perfil.jsx'
+import Diciplinas from './pages/Diciplinas.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -21,6 +24,9 @@ createRoot(document.getElementById('root')).render(
         <Route path="/CadastroUsuarioDados" element={<CadastroUsuarioDados/>}/>
         <Route path="/RecuperarSenha" element={<RecuperarSenha/>}/>
         <Route path="/NovaSenha" element={<NovaSenha/>}/>
+        <Route path="/TutorIA" element={<TutorIA />} />
+        <Route path="/Perfil" element={<Perfil />} />
+        <Route path="/Diciplinas" element={<Diciplinas />} />
       </Routes>
     </BrowserRouter>
     </UsuarioProvider>

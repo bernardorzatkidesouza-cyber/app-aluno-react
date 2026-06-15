@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import InputField from '../componentes/InputField';
 import  '../assets/styles.css'
+import "../assets/mobile.css"
 export default function CadastroUsuarioDados() {
 
  const [nome, setNome] = useState('');

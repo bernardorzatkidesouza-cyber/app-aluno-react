@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import InputField from '../componentes/InputField';
 import  '../assets/styles.css'
+import "../assets/mobile.css"
 import { Link } from 'react-router-dom';
 export default function CadastroUsuario() {
 
