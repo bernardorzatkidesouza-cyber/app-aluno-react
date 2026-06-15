@@ -17,7 +17,7 @@ function Disciplinas() {
                     </h1>
 
                     <div className="menu__links">
-                        <Link to="/DashboardPage" className="menu__item">
+                        <Link to="/dashboard" className="menu__item">
                             <svg className="menu__icon" viewBox="0 0 16 16" fill="currentColor">
                                 <rect x="1" y="1" width="6" height="6" rx="1" />
                                 <rect x="9" y="1" width="6" height="6" rx="1" />
