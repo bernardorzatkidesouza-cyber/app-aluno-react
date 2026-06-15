@@ -1,11 +1,59 @@
-import { useState } from 'react';
+
 import InputField from '../componentes/InputField';
 import '../assets/styles.css';
 import "../assets/mobile.css"
 import { useUsuario } from '../context/UsuarioContext';
 import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 function TutorIA() {
+    const { usuario } = useUsuario();
+    const [dica, setDica] = useState('');
+    const [loading, setLoading] = useState(true);
+    const [erro, setErro] = useState(null);
+
+    useEffect(() => {
+
+        async function buscarDica() {
+
+            try {
+
+                setLoading(true);
+                setErro(null);
+
+                const response = await fetch(
+                    'https://api.adviceslip.com/advice'
+                );
+
+                if (!response.ok) {
+                    throw new Error(
+                        `Erro HTTP: ${response.status}`
+                    );
+                }
+
+                const data = await response.json();
+
+                setDica(data.slip.advice);
+
+            } catch (error) {
+
+                console.error(error);
+                setErro(
+                    'Não foi possível carregar a dica.'
+                );
+
+            } finally {
+
+                setLoading(false);
+
+            }
+
+        }
+
+        buscarDica();
+
+    }, []);
+
     return (
         <div className="dashboard">
 
@@ -46,15 +94,31 @@ function TutorIA() {
             </nav>
 
             <div className="dashboard__container tutor-page">
-
+                <div className="card">
+                    <div className="card__body">
+                        <h3>Dica de Estudos</h3>
+                        {loading && (
+                            <p>Carregando dica...</p>
+                        )}
+                        {erro && (
+                            <p>{erro}</p>
+                        )}
+                        {!loading && !erro && (
+                            <p>{dica}</p>
+                        )}
+                    </div>
+                </div>
+                
                 <div className="chat-area">
 
                     <div className="chat-message">
-                        <div className="chat-avatar">J</div>
+                        <div className="chat-avatar">
+                            {usuario.primeiroNome?.charAt(0).toUpperCase()}
+                        </div>
 
                         <div className="chat-content">
                             <div className="chat-author">
-                                João Silva
+                                {usuario.nome}
                             </div>
 
                             <div className="chat-text">

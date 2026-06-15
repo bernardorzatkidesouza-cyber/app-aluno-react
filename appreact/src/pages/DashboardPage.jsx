@@ -7,6 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 function Dashboard() {
     const [agora, setAgora] = useState(new Date());
+    const { usuario } = useUsuario();
 
     useEffect(() => {
         const intervalo = setInterval(() => {
@@ -58,7 +59,7 @@ function Dashboard() {
 
                 <div className="dashboard__hero">
                     <h2 id="greeting">
-                        {obterSaudacao()}, João
+                        {obterSaudacao()}, {usuario.primeiroNome || "Aluno"}
                     </h2>
 
                     <p id="data-atual">

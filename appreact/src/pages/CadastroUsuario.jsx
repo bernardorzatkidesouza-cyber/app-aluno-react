@@ -3,19 +3,27 @@ import InputField from '../componentes/InputField';
 import  '../assets/styles.css'
 import "../assets/mobile.css"
 import { Link } from 'react-router-dom';
+import { useUsuario } from '../context/UsuarioContext';
 export default function CadastroUsuario() {
-
+ const { usuario, setUsuario } = useUsuario();
  const [cpf, setCpf] = useState('');
  const [erro, setErro] = useState('');
 
 
  function handleSubmit(e) {
-        e.preventDefault();
-        if (!cpf ) { 
-            setErro('Preencha todos os campos'); 
-            return; }
-         setErro('');
-         console.log('cadastro-usuario:', cpf);
+    e.preventDefault();
+
+    if (!cpf) {
+        setErro('Preencha todos os campos');
+        return;
+    }
+
+    setUsuario({
+        ...usuario,
+        cpf
+    });
+
+    setErro('');
  }
     
 
@@ -45,9 +53,9 @@ export default function CadastroUsuario() {
                     value={cpf} 
                     onChange={e =>setCpf(e.target.value)} />
                 {erro && <p>{erro}</p>}
-                <button type="submit">Entrar</button>
+                
 
-                <Link to='/CadastroUsuarioDados'>prosseguir</Link>
+                <button onClick={handleSubmit}><Link to='/CadastroUsuarioDados'>prosseguir</Link></button>
                 
             </div>
 

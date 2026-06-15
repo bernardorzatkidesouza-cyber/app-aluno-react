@@ -5,13 +5,14 @@ import "../assets/mobile.css"
 import { useUsuario } from '../context/UsuarioContext';
 import { Link, useNavigate } from 'react-router-dom';
 
+
 export default function LoginPage() {
 
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const [erro, setErro] = useState('');
     const navigate = useNavigate();
-    const { setUsername } = useUsuario();
+    const { usuario, setUsuario } = useUsuario();
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -23,7 +24,7 @@ export default function LoginPage() {
 
         setErro('');
         console.log('Login:', email, senha);
-        setUsername(email);
+        
         navigate('/dashboard');
     }
 

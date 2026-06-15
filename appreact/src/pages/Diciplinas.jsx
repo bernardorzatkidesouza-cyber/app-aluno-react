@@ -6,6 +6,36 @@ import { useUsuario } from '../context/UsuarioContext';
 import { Link, useNavigate } from 'react-router-dom';
 
 function Disciplinas() {
+    const disciplinas = [
+    {
+        id: 1,
+        nome: "Front-end",
+        professor: "Marco Silva",
+        status: "Em Curso",
+        progresso: 75
+    },
+    {
+        id: 2,
+        nome: "UX Design",
+        professor: "Ana Lúcia",
+        status: "Próximo Semestre",
+        progresso: 0
+    },
+    {
+        id: 3,
+        nome: "Banco de Dados",
+        professor: "Carlos Souza",
+        status: "Em Curso",
+        progresso: 40
+    },
+    {
+        id: 4,
+        nome: "Programação Back-end",
+        professor: "Fernanda Costa",
+        status: "Em Curso",
+        progresso: 60
+    }
+ ];
     return (
         <div className="dashboard">
 
@@ -52,65 +82,55 @@ function Disciplinas() {
 
                 <div className="disciplines-grid">
 
-                    <div className="discipline-card">
-                        <div className="discipline-card__header">
-                            <h3 className="discipline-card__name">Front-end</h3>
-                            <span className="discipline-card__badge discipline-card__badge--active">
-                                Em Curso
-                            </span>
-                        </div>
+    {disciplinas.map((disciplina) => (
+        <div
+            key={disciplina.id}
+            className="discipline-card"
+        >
+            <div className="discipline-card__header">
 
-                        <p className="discipline-card__teacher">
-                            Prof. Marco Silva
-                        </p>
+                <h3 className="discipline-card__name">
+                    {disciplina.nome}
+                </h3>
 
-                        <div className="discipline-card__progress-label">
-                            <span>Progresso</span>
-                            <span>75%</span>
-                        </div>
+                <span
+                    className={`discipline-card__badge ${
+                        disciplina.status === "Em Curso"
+                            ? "discipline-card__badge--active"
+                            : "discipline-card__badge--next"
+                    }`}
+                >
+                    {disciplina.status}
+                </span>
 
-                        <div className="discipline-card__progress-bar">
-                            <div
-                                className="discipline-card__progress-fill"
-                                style={{ width: "75%" }}
-                            />
-                        </div>
+            </div>
 
-                        <button className="discipline-card__btn">
-                            Acessar Disciplina
-                        </button>
-                    </div>
+            <p className="discipline-card__teacher">
+                Prof. {disciplina.professor}
+            </p>
 
-                    <div className="discipline-card">
-                        <div className="discipline-card__header">
-                            <h3 className="discipline-card__name">UX Design</h3>
-                            <span className="discipline-card__badge discipline-card__badge--next">
-                                Próximo Semestre
-                            </span>
-                        </div>
+            <div className="discipline-card__progress-label">
+                <span>Progresso</span>
+                <span>{disciplina.progresso}%</span>
+            </div>
 
-                        <p className="discipline-card__teacher">
-                            Dra. Ana Lúcia
-                        </p>
+            <div className="discipline-card__progress-bar">
+                <div
+                    className="discipline-card__progress-fill"
+                    style={{
+                        width: `${disciplina.progresso}%`
+                    }}
+                />
+            </div>
 
-                        <div className="discipline-card__progress-label">
-                            <span>Disponibilidade</span>
-                            <span>0%</span>
-                        </div>
+            <button className="discipline-card__btn">
+                Acessar Disciplina
+            </button>
 
-                        <div className="discipline-card__progress-bar">
-                            <div
-                                className="discipline-card__progress-fill"
-                                style={{ width: "0%" }}
-                            />
-                        </div>
+        </div>
+    ))}
 
-                        <button className="discipline-card__btn">
-                            Acessar Disciplina
-                        </button>
-                    </div>
-
-                </div>
+</div>
             </div>
 
         </div>

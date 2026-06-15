@@ -6,6 +6,7 @@ import { useUsuario } from '../context/UsuarioContext';
 import { Link, useNavigate } from 'react-router-dom';
 
 function Perfil() {
+    const { usuario } = useUsuario();
     return (
         <div className="dashboard">
 
@@ -54,7 +55,7 @@ function Perfil() {
                     </div>
 
                     <div>
-                        <h2>João Silva</h2>
+                        <h2>{usuario.nome}</h2>
                         <p>Engenharia de Software • 3º Ano</p>
                     </div>
                 </div>
@@ -79,7 +80,7 @@ function Perfil() {
                             Nome Completo
                         </span>
                         <span className="info-value">
-                            João Silva
+                            {usuario.nome}
                         </span>
                     </div>
 
@@ -88,7 +89,7 @@ function Perfil() {
                             Nome de Preferência
                         </span>
                         <span className="info-value">
-                            Jonh
+                            {usuario.primeiroNome}
                         </span>
                     </div>
 
@@ -97,7 +98,7 @@ function Perfil() {
                             Endereço de E-mail
                         </span>
                         <span className="info-value">
-                            joao.silva@satc.edu.br
+                            {usuario.email}
                         </span>
                     </div>
 
@@ -106,7 +107,7 @@ function Perfil() {
                             Matrícula / CPF
                         </span>
                         <span className="info-value">
-                            ***.***.***-89
+                            {usuario.cpf}
                         </span>
                     </div>
 
@@ -115,7 +116,7 @@ function Perfil() {
                             Número de Telefone
                         </span>
                         <span className="info-value info-value--empty">
-                            Não fornecido
+                            {usuario.telefone || "Não fornecido"}
                         </span>
                     </div>
                 </div>

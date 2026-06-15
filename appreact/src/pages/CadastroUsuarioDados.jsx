@@ -2,8 +2,10 @@ import { useState } from 'react';
 import InputField from '../componentes/InputField';
 import  '../assets/styles.css'
 import "../assets/mobile.css"
+import { useUsuario } from '../context/UsuarioContext';
+import { Link } from 'react-router-dom';
 export default function CadastroUsuarioDados() {
-
+ const { usuario, setUsuario } = useUsuario();
  const [nome, setNome] = useState('');
  const [telefone, setTelefone] = useState('');
  const [email, setEmail] = useState('');
@@ -12,12 +14,22 @@ export default function CadastroUsuarioDados() {
 
 
  function handleSubmit(e) {
-        e.preventDefault();
-        if (!nome||!telefone||!email || !senha) { 
-            setErro('Preencha todos os campos'); 
-            return; }
-         setErro('');
-         console.log('Cadatro Dados:',nome,telefone, email, senha);
+    e.preventDefault();
+
+    if (!nome || !telefone || !email || !senha) {
+        setErro('Preencha todos os campos');
+        return;
+    }
+
+    setUsuario({
+        ...usuario,
+        nome,
+        primeiroNome: nome.split(' ')[0],
+        telefone,
+        email
+    });
+
+    console.log('Dados salvos');
  }
     
 
@@ -40,16 +52,16 @@ export default function CadastroUsuarioDados() {
                 <p>Passo 2 de 2. Por favor, insira os dados para finalizar.</p>
         
                     <form onSubmit={handleSubmit}>
-                    <InputField 
-                        label="Nome" 
-                        type="nome" 
-                        value={email} 
-                        onChange={e =>setNome(e.target.value)} />
+                    <InputField
+                         label="Nome"
+                         type="text"
+                         value={nome}
+                         onChange={e => setNome(e.target.value)}/>
                     <InputField 
                         label="Telefone" 
-                        type="telefone" 
+                        type="text" 
                         placeholder="00000-0000"
-                        value={email} 
+                        value={telefone} 
                         onChange={e =>setTelefone(e.target.value)} />
                     <InputField 
                         label="E-mail" 
@@ -65,7 +77,7 @@ export default function CadastroUsuarioDados() {
                         value={senha} 
                         onChange={e =>setSenha(e.target.value)} />
                 {erro && <p>{erro}</p>}
-                <button type="submit">Entrar</button>
+                <button onClick={handleSubmit}><Link to='/dashboard'>prosseguir</Link></button>
         
                 </form>
             </div>
